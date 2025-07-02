@@ -5,8 +5,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name = "category")
-public class Category {
+@Table(name = "brand")
+public class Brand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -16,6 +16,11 @@ public class Category {
     @NotNull
     @Column(name = "name", nullable = false, length = 100)
     private String name;
+
+    @Size(max = 255)
+    @NotNull
+    @Column(name = "logo", nullable = false)
+    private String logo;
 
     public Integer getId() {
         return id;
@@ -31,6 +36,14 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 
 }

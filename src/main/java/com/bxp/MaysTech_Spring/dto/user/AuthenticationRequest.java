@@ -1,4 +1,4 @@
-package com.bxp.MaysTech_Spring.dto.request;
+package com.bxp.MaysTech_Spring.dto.user;
 
 public class AuthenticationRequest {
     boolean authenticated;

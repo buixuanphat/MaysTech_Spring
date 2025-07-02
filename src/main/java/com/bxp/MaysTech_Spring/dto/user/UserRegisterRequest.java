@@ -1,4 +1,4 @@
-package com.bxp.MaysTech_Spring.dto.request;
+package com.bxp.MaysTech_Spring.dto.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

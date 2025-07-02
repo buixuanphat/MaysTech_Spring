@@ -1,94 +1,108 @@
 package com.bxp.MaysTech_Spring.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
+@Table(name = "user")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Integer id;
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long id;
-  private String email;
-  private String password;
-  private String city;
-  private String district;
-  private String ward;
-  private String street;
-  private long houseNumber;
+    @Size(max = 255)
+    @NotNull
+    @Column(name = "email", nullable = false)
+    private String email;
 
+    @Size(max = 255)
+    @NotNull
+    @Column(name = "password", nullable = false)
+    private String password;
 
-  public long getId() {
-    return id;
-  }
+    @Size(max = 100)
+    @Column(name = "city", length = 100)
+    private String city;
 
-  public void setId(long id) {
-    this.id = id;
-  }
+    @Size(max = 100)
+    @Column(name = "district", length = 100)
+    private String district;
 
+    @Size(max = 100)
+    @Column(name = "ward", length = 100)
+    private String ward;
 
-  public String getEmail() {
-    return email;
-  }
+    @Size(max = 100)
+    @Column(name = "street", length = 100)
+    private String street;
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
+    @Column(name = "house_number")
+    private Integer houseNumber;
 
+    public Integer getId() {
+        return id;
+    }
 
-  public String getPassword() {
-    return password;
-  }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
+    public String getEmail() {
+        return email;
+    }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-  public String getCity() {
-    return city;
-  }
+    public String getPassword() {
+        return password;
+    }
 
-  public void setCity(String city) {
-    this.city = city;
-  }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
+    public String getCity() {
+        return city;
+    }
 
-  public String getDistrict() {
-    return district;
-  }
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-  public void setDistrict(String district) {
-    this.district = district;
-  }
+    public String getDistrict() {
+        return district;
+    }
 
+    public void setDistrict(String district) {
+        this.district = district;
+    }
 
-  public String getWard() {
-    return ward;
-  }
+    public String getWard() {
+        return ward;
+    }
 
-  public void setWard(String ward) {
-    this.ward = ward;
-  }
+    public void setWard(String ward) {
+        this.ward = ward;
+    }
 
+    public String getStreet() {
+        return street;
+    }
 
-  public String getStreet() {
-    return street;
-  }
+    public void setStreet(String street) {
+        this.street = street;
+    }
 
-  public void setStreet(String street) {
-    this.street = street;
-  }
+    public Integer getHouseNumber() {
+        return houseNumber;
+    }
 
-
-  public long getHouseNumber() {
-    return houseNumber;
-  }
-
-  public void setHouseNumber(long houseNumber) {
-    this.houseNumber = houseNumber;
-  }
+    public void setHouseNumber(Integer houseNumber) {
+        this.houseNumber = houseNumber;
+    }
 
 }

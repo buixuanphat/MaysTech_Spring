@@ -1,7 +1,6 @@
 package com.bxp.MaysTech_Spring.exception;
 
-public enum ResponseCode {
-    UNCATEGORIZED(500, "Uncategorized"),
+public enum MyApiResponse {
 
     //2XX
     OK(200, "OK"),
@@ -14,6 +13,7 @@ public enum ResponseCode {
     WRONG_EMAIL_FORMAT(400, "Email invalid"),
     WRONG_PASSWORD_FORMAT(400, "Password must be between 8 and 12 characters"),
     USER_ALREADY_EXISTS(409, "User already exists"),
+    CATEGORY_ALREADY_EXISTS(409, "Category already exists"),
     NOT_FOUND(404, "Not found"),
     INVALID_CREDENTIALS(401, "Invalid email or password"),
     FORBIDDEN(403, "Access denied"),
@@ -26,7 +26,7 @@ public enum ResponseCode {
     private int code;
     private String message;
 
-    ResponseCode(int code, String message) {
+    MyApiResponse(int code, String message) {
         this.code = code;
         this.message = message;
     }

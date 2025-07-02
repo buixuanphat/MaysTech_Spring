@@ -1,6 +1,6 @@
 package com.bxp.MaysTech_Spring.exception;
 
-import com.bxp.MaysTech_Spring.dto.response.ApiResponse;
+import com.bxp.MaysTech_Spring.dto.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -14,14 +14,14 @@ public class GlobalExceptionHandler {
     ResponseEntity<ApiResponse> handleException(Exception ex) {
 
         ApiResponse apiResponse = new ApiResponse();
-        apiResponse.setStatusCode(ResponseCode.UNCATEGORIZED.getCode());
-        apiResponse.setMessage(ResponseCode.UNCATEGORIZED.getMessage());
+        apiResponse.setStatusCode(MyApiResponse.INTERNAL_SERVER_ERROR.getCode());
+        apiResponse.setMessage(ex.getMessage());
         return ResponseEntity.internalServerError().body(apiResponse);
     }
 
     @ExceptionHandler(value = AppException.class)
     ResponseEntity<ApiResponse> handleAppException(AppException ex) {
-        ResponseCode responseCode = ex.getAppError();
+        MyApiResponse responseCode = ex.getAppError();
 
         ApiResponse apiResponse = new ApiResponse();
 
@@ -37,9 +37,9 @@ public class GlobalExceptionHandler {
         String message = ex.getFieldError().getDefaultMessage();
 
         ApiResponse apiResponse = new ApiResponse();
-        apiResponse.setStatusCode(ResponseCode.BAD_REQUEST.getCode());
+        apiResponse.setStatusCode(MyApiResponse.BAD_REQUEST.getCode());
         apiResponse.setMessage(message);
 
-        return ResponseEntity.status(ResponseCode.BAD_REQUEST.getCode()).body(apiResponse);
+        return ResponseEntity.status(MyApiResponse.BAD_REQUEST.getCode()).body(apiResponse);
     }
 }

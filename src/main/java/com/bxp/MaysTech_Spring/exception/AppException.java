@@ -1,14 +1,14 @@
 package com.bxp.MaysTech_Spring.exception;
 
 public class AppException extends RuntimeException {
-    private ResponseCode responseCode;
+    private MyApiResponse myApiResponse;
 
-    public AppException(ResponseCode responseCode) {
-        super(responseCode.getMessage());
-        this.responseCode = responseCode;
+    public AppException(MyApiResponse myApiResponse) {
+        super(myApiResponse.getMessage());
+        this.myApiResponse = myApiResponse;
     }
 
-    public ResponseCode getAppError() {
-        return responseCode;
+    public MyApiResponse getAppError() {
+        return myApiResponse;
     }
 }

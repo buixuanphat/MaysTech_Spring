@@ -1,11 +1,11 @@
-package com.bxp.MaysTech_Spring.dto.request;
+package com.bxp.MaysTech_Spring.dto.user;
 
 public class UserUpdateRequest {
     private String city;
     private String district;
     private String ward;
     private String street;
-    private long houseNumber;
+    private int houseNumber;
 
     public String getCity() {
         return city;
@@ -39,11 +39,11 @@ public class UserUpdateRequest {
         this.street = street;
     }
 
-    public long getHouseNumber() {
+    public int getHouseNumber() {
         return houseNumber;
     }
 
-    public void setHouseNumber(long houseNumber) {
+    public void setHouseNumber(int houseNumber) {
         this.houseNumber = houseNumber;
     }
 }

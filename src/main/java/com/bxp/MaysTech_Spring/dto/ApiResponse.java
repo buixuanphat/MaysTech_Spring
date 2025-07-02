@@ -1,4 +1,4 @@
-package com.bxp.MaysTech_Spring.dto.response;
+package com.bxp.MaysTech_Spring.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

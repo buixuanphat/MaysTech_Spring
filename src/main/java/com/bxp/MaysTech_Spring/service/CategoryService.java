@@ -40,6 +40,10 @@ public class CategoryService {
 
     public Category updateCategory(int catId, CategoryRequest request)
     {
+        if(!categoryRepository.existsById(catId))
+        {
+            throw new AppException(MyApiResponse.NOT_FOUND);
+        }
         Category updatedCat = this.getCategoryById(catId);
         updatedCat.setName(request.getName());
         return categoryRepository.save(updatedCat);

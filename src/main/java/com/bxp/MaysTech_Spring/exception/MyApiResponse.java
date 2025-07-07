@@ -14,6 +14,8 @@ public enum MyApiResponse {
     WRONG_PASSWORD_FORMAT(400, "Password must be between 8 and 12 characters"),
     USER_ALREADY_EXISTS(409, "User already exists"),
     CATEGORY_ALREADY_EXISTS(409, "Category already exists"),
+    BRAND_ALREADY_EXISTS(409, "Brand already exists"),
+    PRODUCT_ALREADY_EXISTS(409, "Product already exists"),
     NOT_FOUND(404, "Not found"),
     INVALID_CREDENTIALS(401, "Invalid email or password"),
     FORBIDDEN(403, "Access denied"),

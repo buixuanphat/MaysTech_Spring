@@ -11,7 +11,6 @@ import org.hibernate.annotations.OnDeleteAction;
 @Table(name = "product")
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -28,10 +27,6 @@ public class Product {
     @Lob
     @Column(name = "description", nullable = false)
     private String description;
-
-    @NotNull
-    @Column(name = "image", nullable = false)
-    private String image;
 
     @NotNull
     @Column(name = "stock", nullable = false)
@@ -59,26 +54,15 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public Boolean getSale() {
-        return isSale;
-    }
-
-    public void setSale(Boolean sale) {
-        isSale = sale;
-    }
-
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.SET_NULL)
     @JoinColumn(name = "brand_id")
     private Brand brand;
+
+    @NotNull
+    @Lob
+    @Column(name = "image", nullable = false)
+    private String image;
 
     public Integer getId() {
         return id;
@@ -166,6 +150,14 @@ public class Product {
 
     public void setBrand(Brand brand) {
         this.brand = brand;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
 }

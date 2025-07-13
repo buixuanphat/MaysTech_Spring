@@ -1,7 +1,5 @@
 package com.bxp.MaysTech_Spring.service;
 
-import com.bxp.MaysTech_Spring.dto.ApiResponse;
-import com.bxp.MaysTech_Spring.dto.brand.BrandResponse;
 import com.bxp.MaysTech_Spring.dto.product.ProductRequest;
 import com.bxp.MaysTech_Spring.dto.product.ProductResponse;
 import com.bxp.MaysTech_Spring.entity.Product;
@@ -93,6 +91,10 @@ public class ProductService {
         return productResponse;
     }
 
+    public Product getProductEntityById(int id) {
+        return productRepository.findById(id).orElseThrow(() -> new AppException(MyApiResponse.NOT_FOUND));
+    }
+
     public ProductResponse updateProduct(int id, ProductRequest request) {
         if (!productRepository.existsById(id)) {
             throw new AppException(MyApiResponse.NOT_FOUND);
@@ -169,18 +171,6 @@ public class ProductService {
             productResponse.setCategoryId(product.getCategory().getId());
             productResponse.setBrandId(product.getBrand().getId());
             return productResponse;
-        }).collect(Collectors.toList());
-    }
-
-    public List<BrandResponse> findDistinctBrandsByCategory(int categoryId) {
-        return this.productRepository.findDistinctBrandsByCategory(categoryId).stream().map(b ->
-        {
-            BrandResponse brandResponse = new BrandResponse(
-                    b.getId(),
-                    b.getName(),
-                    b.getLogo()
-            );
-            return brandResponse;
         }).collect(Collectors.toList());
     }
 }

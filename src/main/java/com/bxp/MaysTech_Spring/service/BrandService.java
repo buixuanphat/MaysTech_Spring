@@ -59,4 +59,9 @@ public class BrandService {
         brandRepository.deleteById(brandId);
     }
 
+    public List<Brand> findBrandOfCategory(int catId)
+    {
+        return brandRepository.findBrandsOfCategory(catId);
+    }
+
 }

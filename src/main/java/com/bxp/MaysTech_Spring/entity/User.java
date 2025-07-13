@@ -23,8 +23,8 @@ public class User {
     private String password;
 
     @Size(max = 100)
-    @Column(name = "city", length = 100)
-    private String city;
+    @Column(name = "province", length = 100)
+    private String province;
 
     @Size(max = 100)
     @Column(name = "district", length = 100)
@@ -35,11 +35,21 @@ public class User {
     private String ward;
 
     @Size(max = 100)
-    @Column(name = "street", length = 100)
-    private String street;
+    @Column(name = "address_details", length = 100)
+    private String addressDetails;
 
-    @Column(name = "house_number")
-    private Integer houseNumber;
+    @Column(name = "province_id")
+    private Integer provinceId;
+
+    @Column(name = "district_id")
+    private Integer districtId;
+
+    @Column(name = "ward_id")
+    private Integer wardId;
+
+    @Size(max = 10)
+    @Column(name = "phone_number", length = 10)
+    private String phoneNumber;
 
     public Integer getId() {
         return id;
@@ -65,12 +75,12 @@ public class User {
         this.password = password;
     }
 
-    public String getCity() {
-        return city;
+    public String getProvince() {
+        return province;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setProvince(String province) {
+        this.province = province;
     }
 
     public String getDistrict() {
@@ -89,20 +99,44 @@ public class User {
         this.ward = ward;
     }
 
-    public String getStreet() {
-        return street;
+    public String getAdressDetails() {
+        return addressDetails;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
+    public void setAdressDetails(String adressDetails) {
+        this.addressDetails = adressDetails;
     }
 
-    public Integer getHouseNumber() {
-        return houseNumber;
+    public Integer getProvinceId() {
+        return provinceId;
     }
 
-    public void setHouseNumber(Integer houseNumber) {
-        this.houseNumber = houseNumber;
+    public void setProvinceId(Integer provinceId) {
+        this.provinceId = provinceId;
+    }
+
+    public Integer getDistrictId() {
+        return districtId;
+    }
+
+    public void setDistrictId(Integer districtId) {
+        this.districtId = districtId;
+    }
+
+    public Integer getWardId() {
+        return wardId;
+    }
+
+    public void setWardId(Integer wardId) {
+        this.wardId = wardId;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
 }

@@ -1,18 +1,29 @@
 package com.bxp.MaysTech_Spring.dto.user;
 
 public class UserUpdateRequest {
-    private String city;
+    private String province;
     private String district;
     private String ward;
-    private String street;
-    private int houseNumber;
+    private String addressDetails;
+    private int provinceId;
+    private int districtId;
+    private int wardId;
+    private String phoneNumber;
 
-    public String getCity() {
-        return city;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
     }
 
     public String getDistrict() {
@@ -31,19 +42,35 @@ public class UserUpdateRequest {
         this.ward = ward;
     }
 
-    public String getStreet() {
-        return street;
+    public String getAddressDetails() {
+        return addressDetails;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
+    public void setAddressDetails(String addressDetails) {
+        this.addressDetails = addressDetails;
     }
 
-    public int getHouseNumber() {
-        return houseNumber;
+    public int getProvinceId() {
+        return provinceId;
     }
 
-    public void setHouseNumber(int houseNumber) {
-        this.houseNumber = houseNumber;
+    public void setProvinceId(int provinceId) {
+        this.provinceId = provinceId;
+    }
+
+    public int getDistrictId() {
+        return districtId;
+    }
+
+    public void setDistrictId(int districtId) {
+        this.districtId = districtId;
+    }
+
+    public int getWardId() {
+        return wardId;
+    }
+
+    public void setWardId(int wardId) {
+        this.wardId = wardId;
     }
 }

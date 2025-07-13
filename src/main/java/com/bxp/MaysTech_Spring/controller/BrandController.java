@@ -55,13 +55,23 @@ public class BrandController {
         return apiResponse;
     }
 
-    @DeleteMapping("brands/{brandId}")
+    @DeleteMapping("/brands/{brandId}")
     public ApiResponse<Brand> deleteBrand(@PathVariable int brandId)
     {
         brandService.deleteBrand(brandId);
         ApiResponse<Brand> apiResponse = new ApiResponse<>();
         apiResponse.setStatusCode(MyApiResponse.NO_CONTENT.getCode());
         apiResponse.setMessage(MyApiResponse.NO_CONTENT.getMessage());
+        return apiResponse;
+    }
+
+    @GetMapping("/brand-category/{catId}")
+    public ApiResponse<List<Brand>> findBrandsOfCategory(@PathVariable int catId)
+    {
+        ApiResponse<List<Brand>> apiResponse = new ApiResponse<>();
+        apiResponse.setStatusCode(MyApiResponse.OK.getCode());
+        apiResponse.setMessage(MyApiResponse.OK.getMessage());
+        apiResponse.setData(brandService.findBrandOfCategory(catId));
         return apiResponse;
     }
 

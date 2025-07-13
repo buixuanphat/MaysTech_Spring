@@ -1,11 +1,8 @@
 package com.bxp.MaysTech_Spring.controller;
 
 import com.bxp.MaysTech_Spring.dto.ApiResponse;
-import com.bxp.MaysTech_Spring.dto.brand.BrandResponse;
 import com.bxp.MaysTech_Spring.dto.product.ProductRequest;
 import com.bxp.MaysTech_Spring.dto.product.ProductResponse;
-import com.bxp.MaysTech_Spring.entity.Brand;
-import com.bxp.MaysTech_Spring.entity.Product;
 import com.bxp.MaysTech_Spring.exception.MyApiResponse;
 import com.bxp.MaysTech_Spring.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,16 +84,4 @@ public class ProductController {
         apiResponse.setData(productService.getProductsByCategoryAndBrand(catId, brandId));
         return apiResponse;
     }
-
-    @GetMapping("/products/category-brand/{catId}")
-    public ApiResponse<List<BrandResponse>> findDistinctBrandsByCategory(@PathVariable("catId") int catId)
-    {
-        ApiResponse<List<BrandResponse>> apiResponse = new ApiResponse<>();
-        apiResponse.setStatusCode(MyApiResponse.OK.getCode());
-        apiResponse.setMessage(MyApiResponse.OK.getMessage());
-        apiResponse.setData(productService.findDistinctBrandsByCategory(catId));
-        return apiResponse;
-    }
-
-
 }

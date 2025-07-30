@@ -9,4 +9,8 @@ import java.util.List;
 @Repository
 public interface DeliveryRepository extends JpaRepository<Delivery,Integer> {
     List<Delivery> findAllByUser_Id(Integer userId);
+
+    List<Delivery> findAllByUser_IdAndStatus(Integer userId, String status);
 }
+
+

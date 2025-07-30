@@ -60,7 +60,7 @@ public class DeliveryDetailsService {
 
         requests.forEach(request -> {
             DeliveryDetail deliveryDetail = new DeliveryDetail();
-            deliveryDetail.setDelivery(deliveryRepository.findById(request.getDeliveryId()).orElseThrow(() -> new AppException(MyApiResponse.NOT_FOUND)));
+            deliveryDetail.setDelivery(deliveryRepository.findById(deliveryId).orElseThrow(() -> new AppException(MyApiResponse.NOT_FOUND)));
             deliveryDetail.setProductId(request.getProductId());
             deliveryDetail.setName(request.getName());
             deliveryDetail.setImage(request.getImage());

@@ -51,6 +51,30 @@ public class User {
     @Column(name = "phone_number", length = 10)
     private String phoneNumber;
 
+    @Size(max = 45)
+    @Column(name = "username", length = 45)
+    private String username;
+
+    @Lob
+    @Column(name = "avatar")
+    private String avatar;
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public Integer getId() {
         return id;
     }

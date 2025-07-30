@@ -11,7 +11,25 @@ public class DeliveryResponse {
     private String status;
     private boolean cancellationRequest;
     private double totalPrice;
-    public int totalAmount;
+    private int totalAmount;
+    private double totalWeight;
+    private boolean hasFeedback;
+
+    public boolean isHasFeedback() {
+        return hasFeedback;
+    }
+
+    public void setHasFeedback(boolean hasFeedback) {
+        this.hasFeedback = hasFeedback;
+    }
+
+    public double getTotalWeight() {
+        return totalWeight;
+    }
+
+    public void setTotalWeight(double totalWeight) {
+        this.totalWeight = totalWeight;
+    }
 
     public double getTotalPrice() {
         return totalPrice;

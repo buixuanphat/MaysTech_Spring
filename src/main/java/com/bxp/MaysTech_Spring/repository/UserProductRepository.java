@@ -26,11 +26,10 @@ public interface UserProductRepository extends JpaRepository<UserProduct, Intege
 
     @Query("SELECT new com.bxp.MaysTech_Spring.dto.user_product.UserProductTotalResponse(" +
             "CAST(COUNT(up.id) AS int), " +
-            "COALESCE(SUM(up.amount * p.price), 0)) " +
+            "COALESCE(SUM(up.amount * p.price), 0), " +
+            "COALESCE(SUM(p.weight * up.amount), 0)) " +
             "FROM UserProduct up JOIN up.product p " +
             "WHERE up.isChosen = true AND up.user.id = :userId")
-
-
     UserProductTotalResponse getCartTotalByUserId(@Param("userId") int userId);
 
 

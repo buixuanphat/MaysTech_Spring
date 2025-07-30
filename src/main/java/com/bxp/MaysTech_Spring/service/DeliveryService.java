@@ -35,6 +35,7 @@ public class DeliveryService {
         deliveryResponse.setCancellationRequest(delivery.getCancellationRequest());
         deliveryResponse.setTotalPrice(delivery.getTotalPrice());
         deliveryResponse.setTotalAmount(delivery.getTotalAmount());
+        deliveryResponse.setHasFeedback(delivery.getHasFeedback());
         return deliveryResponse;
     }
 
@@ -51,6 +52,8 @@ public class DeliveryService {
             deliveryResponse.setCancellationRequest(d.getCancellationRequest());
             deliveryResponse.setTotalPrice(d.getTotalPrice());
             deliveryResponse.setTotalAmount(d.getTotalAmount());
+            deliveryResponse.setTotalWeight(d.getTotalWeight());
+            deliveryResponse.setHasFeedback(d.getHasFeedback());
             return deliveryResponse;
         }).collect(Collectors.toList());
     }
@@ -60,11 +63,38 @@ public class DeliveryService {
         Delivery delivery = new Delivery();
         delivery.setUser(userService.getUserEntityById(request.getUserId()));
         delivery.setStartDate(LocalDate.now());
-        delivery.setStatus(OrderStatus.PREPARING.getLabel());
-        delivery.setCancellationRequest(false);
         delivery.setTotalPrice(request.getTotalPrice());
         delivery.setTotalAmount(request.getTotalAmount());
+        delivery.setTotalWeight(request.getTotalWeight());
+        delivery.setStatus(OrderStatus.PREPARING.getLabel());
+        delivery.setHasFeedback(false);
 
+        deliveryRepository.save(delivery);
+        return this.getById(delivery.getId());
+    }
+
+    public List<DeliveryResponse> getDeliveryByStatus(int userId, String status)
+    {
+        return deliveryRepository.findAllByUser_IdAndStatus(userId, status).stream().map(d -> {
+            DeliveryResponse response = new DeliveryResponse();
+            response.setId(d.getId());
+            response.setUserId(d.getUser().getId());
+            response.setStatus(d.getStatus());
+            response.setStartDate(d.getStartDate());
+            response.setReceivedDate(d.getReceivedDate());
+            response.setCancellationRequest(d.getCancellationRequest());
+            response.setTotalPrice(d.getTotalPrice());
+            response.setTotalAmount(d.getTotalAmount());
+            response.setTotalWeight(d.getTotalWeight());
+            response.setHasFeedback(d.getHasFeedback());
+            return response;
+        }).collect(Collectors.toList());
+    }
+
+    public DeliveryResponse updateFeedbackStatus(int id)
+    {
+        Delivery delivery = deliveryRepository.getById(id);
+        delivery.setHasFeedback(true);
         deliveryRepository.save(delivery);
         return this.getById(delivery.getId());
     }

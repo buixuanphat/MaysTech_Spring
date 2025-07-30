@@ -6,10 +6,17 @@ public class DeliveryCreateRequest {
 
     private int userId;
     private LocalDate startDate;
-    private String status;
-    private boolean cancellationRequest;
     private double totalPrice;
-    public int totalAmount;
+    private int totalAmount;
+    private double totalWeight;
+
+    public double getTotalWeight() {
+        return totalWeight;
+    }
+
+    public void setTotalWeight(double totalWeight) {
+        this.totalWeight = totalWeight;
+    }
 
     public double getTotalPrice() {
         return totalPrice;
@@ -43,19 +50,4 @@ public class DeliveryCreateRequest {
         this.startDate = startDate;
     }
 
-    public boolean isCancellationRequest() {
-        return cancellationRequest;
-    }
-
-    public void setCancellationRequest(boolean cancellationRequest) {
-        this.cancellationRequest = cancellationRequest;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 }

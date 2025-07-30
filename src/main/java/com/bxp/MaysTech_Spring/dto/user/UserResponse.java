@@ -5,9 +5,17 @@ public class UserResponse {
 
     private Integer id;
     private String email;
-    private String city;
-    private String district;
     private String ward;
+    private String district;
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
     private String addressDetails;
     private String province;
     private Integer provinceId;
@@ -31,21 +39,6 @@ public class UserResponse {
         this.email = email;
     }
 
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(String district) {
-        this.district = district;
-    }
 
     public String getWard() {
         return ward;

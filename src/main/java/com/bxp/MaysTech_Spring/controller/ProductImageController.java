@@ -1,16 +1,15 @@
 package com.bxp.MaysTech_Spring.controller;
 
 import com.bxp.MaysTech_Spring.dto.ApiResponse;
-import com.bxp.MaysTech_Spring.dto.product_image.ProductImageDTO;
-import com.bxp.MaysTech_Spring.entity.ProductImage;
+import com.bxp.MaysTech_Spring.dto.product_image.ProductImageResponse;
 import com.bxp.MaysTech_Spring.exception.MyApiResponse;
 import com.bxp.MaysTech_Spring.service.ProductImageService;
+import com.sun.jdi.VoidType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class ProductImageController {
@@ -19,12 +18,36 @@ public class ProductImageController {
     ProductImageService productImageService;
 
     @GetMapping("/product-image/{prodId}")
-    public ApiResponse<List<ProductImageDTO>> getImageByProduct(@PathVariable(value = "prodId") int productId)
+    public ApiResponse<List<ProductImageResponse>> getImageByProduct(@PathVariable(value = "prodId") int productId)
     {
-        ApiResponse<List<ProductImageDTO>> apiResponse = new ApiResponse<>();
+        ApiResponse<List<ProductImageResponse>> apiResponse = new ApiResponse<>();
         apiResponse.setStatusCode(MyApiResponse.OK.getCode());
         apiResponse.setMessage(MyApiResponse.OK.getMessage());
         apiResponse.setData(productImageService.getImageByProduct(productId));
         return apiResponse;
     }
+
+    @DeleteMapping("/product-image/{id}")
+    public ApiResponse<Void> deleteImageOfProduct(@PathVariable("id") int id) {
+        ApiResponse<Void> apiResponse = new ApiResponse<>();
+        apiResponse.setStatusCode(MyApiResponse.NO_CONTENT.getCode());
+        apiResponse.setMessage(MyApiResponse.NO_CONTENT.getMessage());
+
+        productImageService.deleteImageOfProduct(id);
+
+        apiResponse.setData(null);
+        return apiResponse;
+    }
+
+    @PostMapping("/product-image")
+    public ApiResponse<ProductImageResponse> addProductImage(@RequestBody Map<String, String> body)
+    {
+        ApiResponse<ProductImageResponse> apiResponse = new ApiResponse<>();
+        apiResponse.setStatusCode(MyApiResponse.CREATED.getCode());
+        apiResponse.setMessage(MyApiResponse.CREATED.getMessage());
+        apiResponse.setData(productImageService.addImageOfProduct(body));
+        return apiResponse;
+    }
+
+
 }

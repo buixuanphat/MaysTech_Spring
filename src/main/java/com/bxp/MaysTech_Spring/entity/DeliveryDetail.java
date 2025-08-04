@@ -2,7 +2,6 @@ package com.bxp.MaysTech_Spring.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "delivery_details")
@@ -12,24 +11,15 @@ public class DeliveryDetail {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @ManyToOne
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "delivery_id", nullable = false)
     private Delivery delivery;
 
-
     @NotNull
-    @Column(name = "product_id", nullable = false)
-    private Integer productId;
-
-    @Size(max = 255)
-    @NotNull
-    @Column(name = "name", nullable = false)
-    private String name;
-
-    @NotNull
-    @Lob
-    @Column(name = "image", nullable = false)
-    private String image;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
 
     @NotNull
     @Column(name = "total_amount", nullable = false)
@@ -55,29 +45,12 @@ public class DeliveryDetail {
         this.delivery = delivery;
     }
 
-
-    public Integer getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(Integer productId) {
-        this.productId = productId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public Integer getTotalAmount() {

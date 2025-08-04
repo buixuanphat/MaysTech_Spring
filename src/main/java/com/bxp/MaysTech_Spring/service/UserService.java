@@ -90,13 +90,18 @@ public class UserService {
         user.setDistrict(request.getDistrict());
         user.setWard(request.getWard());
         user.setPhoneNumber(request.getPhoneNumber());
-        user.setAdressDetails(request.getAddressDetails());
-        user.setProvinceId(request.getProvinceId());
-        user.setDistrictId(request.getDistrictId());
-        user.setWardId(request.getWardId());
+        user.setAddressDetails(request.getAddressDetails());
 
         userRepository.save(user);
 
+        return toUserResponse(user);
+    }
+
+    public UserResponse updateAvatar(int userId, String avatar) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new AppException(MyApiResponse.NOT_FOUND));
+        user.setAvatar(avatar);
+        userRepository.save(user);
         return toUserResponse(user);
     }
 
@@ -114,11 +119,9 @@ public class UserService {
         response.setProvince(user.getProvince());
         response.setDistrict(user.getDistrict());
         response.setWard(user.getWard());
-        response.setProvinceId(user.getProvinceId());
-        response.setDistrictId(user.getDistrictId());
-        response.setWardId(user.getWardId());
-        response.setAddressDetails(user.getAdressDetails());
+        response.setAddressDetails(user.getAddressDetails());
         response.setPhoneNumber(user.getPhoneNumber());
+        response.setAvatar(user.getAvatar());
         return response;
     }
 }

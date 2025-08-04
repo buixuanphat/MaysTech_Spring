@@ -5,6 +5,8 @@ import com.bxp.MaysTech_Spring.dto.product.ProductRequest;
 import com.bxp.MaysTech_Spring.dto.product.ProductResponse;
 import com.bxp.MaysTech_Spring.exception.MyApiResponse;
 import com.bxp.MaysTech_Spring.service.ProductService;
+import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +28,7 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public ApiResponse getProducts()
+    public ApiResponse<List<ProductResponse>> getProducts()
     {
         ApiResponse<List<ProductResponse>> apiResponse = new ApiResponse<>();
         apiResponse.setStatusCode(MyApiResponse.OK.getCode());
@@ -45,7 +47,28 @@ public class ProductController {
         return apiResponse;
     }
 
-    @PutMapping("/products/{prodId}")
+
+    @GetMapping("/products/category/{catId}")
+    public ApiResponse<List<ProductResponse>> getProductsByCategory(@PathVariable int catId, String kw, @Nullable @RequestParam("ordered") String ordered)
+    {
+        ApiResponse<List<ProductResponse>> apiResponse = new ApiResponse<>();
+        apiResponse.setStatusCode(MyApiResponse.OK.getCode());
+        apiResponse.setMessage(MyApiResponse.OK.getMessage());
+        apiResponse.setData(productService.getProductsByCategory(catId, ordered));
+        return apiResponse;
+    }
+
+    @GetMapping("/products/category/{catId}/brand/{brandId}")
+    public ApiResponse<List<ProductResponse>> getProductsByCategoryAndBrand(@PathVariable(value = "catId") int catId, @PathVariable(value = "brandId") int brandId, @Nullable @RequestParam("ordered") String ordered)
+    {
+        ApiResponse<List<ProductResponse>> apiResponse = new ApiResponse<>();
+        apiResponse.setStatusCode(MyApiResponse.OK.getCode());
+        apiResponse.setMessage(MyApiResponse.OK.getMessage());
+        apiResponse.setData(productService.getProductsByCategoryAndBrand(catId, brandId, ordered));
+        return apiResponse;
+    }
+
+    @PatchMapping("/products/{prodId}")
     public ApiResponse<ProductResponse> updateProduct(@PathVariable int prodId, @RequestBody ProductRequest request)
     {
         ApiResponse<ProductResponse> apiResponse = new ApiResponse<>();
@@ -55,33 +78,4 @@ public class ProductController {
         return apiResponse;
     }
 
-    @DeleteMapping("/products/{prodId}")
-    public ApiResponse deleteProduct(@PathVariable int prodId)
-    {
-        ApiResponse apiResponse = new ApiResponse<>();
-        apiResponse.setStatusCode(MyApiResponse.NO_CONTENT.getCode());
-        apiResponse.setMessage(MyApiResponse.NO_CONTENT.getMessage());
-        productService.deleteProduct(prodId);
-        return apiResponse;
-    }
-
-    @GetMapping("/products/category/{catId}")
-    public ApiResponse<List<ProductResponse>> getProductsByCategory(@PathVariable int catId)
-    {
-        ApiResponse<List<ProductResponse>> apiResponse = new ApiResponse<>();
-        apiResponse.setStatusCode(MyApiResponse.OK.getCode());
-        apiResponse.setMessage(MyApiResponse.OK.getMessage());
-        apiResponse.setData(productService.getProductsByCategory(catId));
-        return apiResponse;
-    }
-
-    @GetMapping("/products/category/{catId}/brand/{brandId}")
-    public ApiResponse<List<ProductResponse>> getProductsByCategoryAndBrand(@PathVariable(value = "catId") int catId, @PathVariable(value = "brandId") int brandId)
-    {
-        ApiResponse<List<ProductResponse>> apiResponse = new ApiResponse<>();
-        apiResponse.setStatusCode(MyApiResponse.OK.getCode());
-        apiResponse.setMessage(MyApiResponse.OK.getMessage());
-        apiResponse.setData(productService.getProductsByCategoryAndBrand(catId, brandId));
-        return apiResponse;
-    }
 }

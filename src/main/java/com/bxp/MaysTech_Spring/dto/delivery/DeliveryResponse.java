@@ -1,9 +1,17 @@
 package com.bxp.MaysTech_Spring.dto.delivery;
 
+import com.bxp.MaysTech_Spring.entity.User;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.ColumnDefault;
+
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Date;
 
 public class DeliveryResponse {
+
     private int id;
     private int userId;
     private LocalDate startDate;
@@ -12,40 +20,7 @@ public class DeliveryResponse {
     private boolean cancellationRequest;
     private double totalPrice;
     private int totalAmount;
-    private double totalWeight;
-    private boolean hasFeedback;
-
-    public boolean isHasFeedback() {
-        return hasFeedback;
-    }
-
-    public void setHasFeedback(boolean hasFeedback) {
-        this.hasFeedback = hasFeedback;
-    }
-
-    public double getTotalWeight() {
-        return totalWeight;
-    }
-
-    public void setTotalWeight(double totalWeight) {
-        this.totalWeight = totalWeight;
-    }
-
-    public double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    public int getTotalAmount() {
-        return totalAmount;
-    }
-
-    public void setTotalAmount(int totalAmount) {
-        this.totalAmount = totalAmount;
-    }
+    private String address;
 
     public int getId() {
         return id;
@@ -93,5 +68,29 @@ public class DeliveryResponse {
 
     public void setCancellationRequest(boolean cancellationRequest) {
         this.cancellationRequest = cancellationRequest;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public int getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(int totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

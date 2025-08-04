@@ -1,6 +1,9 @@
-package com.bxp.MaysTech_Spring.dto.product_image;
+package com.bxp.MaysTech_Spring.dto.product_highlight;
 
-public class ProductImageDTO {
+import com.bxp.MaysTech_Spring.entity.Product;
+
+public class ProductHighlightCreateRequest {
+
     private int productId;
     private String image;
 

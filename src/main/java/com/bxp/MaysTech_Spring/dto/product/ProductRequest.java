@@ -13,19 +13,9 @@ public class ProductRequest {
     private Double price;
     private String description;
     private String image;
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     private Integer stock;
-    private Double weight;
-    private int category;
-    private int brand;
+    private int categoryId;
+    private int brandId;
 
     public String getName() {
         return name;
@@ -51,6 +41,14 @@ public class ProductRequest {
         this.description = description;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public Integer getStock() {
         return stock;
     }
@@ -59,27 +57,19 @@ public class ProductRequest {
         this.stock = stock;
     }
 
-    public Double getWeight() {
-        return weight;
+    public int getCategoryId() {
+        return categoryId;
     }
 
-    public void setWeight(Double weight) {
-        this.weight = weight;
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
-    public int getCategory() {
-        return category;
+    public int getBrandId() {
+        return brandId;
     }
 
-    public void setCategory(int category) {
-        this.category = category;
-    }
-
-    public int getBrand() {
-        return brand;
-    }
-
-    public void setBrand(int brand) {
-        this.brand = brand;
+    public void setBrandId(int brandId) {
+        this.brandId = brandId;
     }
 }

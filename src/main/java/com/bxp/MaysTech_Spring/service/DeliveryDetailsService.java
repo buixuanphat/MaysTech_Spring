@@ -7,6 +7,7 @@ import com.bxp.MaysTech_Spring.exception.AppException;
 import com.bxp.MaysTech_Spring.exception.MyApiResponse;
 import com.bxp.MaysTech_Spring.repository.DeliveryDetailsRepository;
 import com.bxp.MaysTech_Spring.repository.DeliveryRepository;
+import com.bxp.MaysTech_Spring.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,35 +24,19 @@ public class DeliveryDetailsService {
     @Autowired
     DeliveryRepository deliveryRepository;
 
+    @Autowired
+    ProductRepository productRepository;
+
     public DeliveryDetailsResponse getById(int id)
     {
         DeliveryDetail deliveryDetail = deliveryDetailsRepository.findById(id).orElseThrow(() -> new AppException(MyApiResponse.NOT_FOUND));
-        DeliveryDetailsResponse response = new DeliveryDetailsResponse();
-        response.setId(deliveryDetail.getId());
-        response.setDeliveryId(deliveryDetail.getDelivery().getId());
-        response.setProductId(deliveryDetail.getProductId());
-        response.setName(deliveryDetail.getName());
-        response.setImage(deliveryDetail.getImage());
-        response.setTotalAmount(deliveryDetail.getTotalAmount());
-        response.setTotalPrice(deliveryDetail.getTotalPrice());
-        return response;
-
+        return convertEntityToResponse(deliveryDetail);
     }
 
-    public List<DeliveryDetailsResponse> getDeliveringProduct (int deliveryId)
+    public List<DeliveryDetailsResponse> getProductInDelivery(int deliveryId)
     {
         List<DeliveryDetail> deliveryDetails = deliveryDetailsRepository.findAllByDelivery_Id(deliveryId);
-        return deliveryDetails.stream().map(d -> {
-            DeliveryDetailsResponse response = new DeliveryDetailsResponse();
-            response.setId(d.getId());
-            response.setDeliveryId(d.getDelivery().getId());
-            response.setProductId(d.getProductId());
-            response.setName(d.getName());
-            response.setImage(d.getImage());
-            response.setTotalAmount(d.getTotalAmount());
-            response.setTotalPrice(d.getTotalPrice());
-            return response;
-        }).collect(Collectors.toList());
+        return deliveryDetails.stream().map(this::convertEntityToResponse).collect(Collectors.toList());
     }
 
     public List<DeliveryDetailsResponse> addDeliveryDetails(int deliveryId, List<DeliveryDetailsCreateRequest> requests)
@@ -60,19 +45,30 @@ public class DeliveryDetailsService {
 
         requests.forEach(request -> {
             DeliveryDetail deliveryDetail = new DeliveryDetail();
-            deliveryDetail.setDelivery(deliveryRepository.findById(deliveryId).orElseThrow(() -> new AppException(MyApiResponse.NOT_FOUND)));
-            deliveryDetail.setProductId(request.getProductId());
-            deliveryDetail.setName(request.getName());
-            deliveryDetail.setImage(request.getImage());
+            deliveryDetail.setDelivery(deliveryRepository.getById(deliveryId));
+            deliveryDetail.setProduct(productRepository.getReferenceById(request.getProductId()));
             deliveryDetail.setTotalAmount(request.getTotalAmount());
             deliveryDetail.setTotalPrice(request.getTotalPrice());
             deliveryDetailsRepository.save(deliveryDetail);
             responses.add(getById(deliveryDetail.getId()));
         });
 
-        return getDeliveringProduct(deliveryId);
+        return getProductInDelivery(deliveryId);
     }
 
+    DeliveryDetailsResponse convertEntityToResponse(DeliveryDetail deliveryDetail)
+    {
+        DeliveryDetailsResponse response = new DeliveryDetailsResponse();
+        response.setId(deliveryDetail.getId());
+        response.setDeliveryId(deliveryDetail.getDelivery().getId());
+        response.setProductId(deliveryDetail.getProduct().getId());
+        response.setProductName(deliveryDetail.getProduct().getName());
+        response.setProductPrice(deliveryDetail.getProduct().getPrice());
+        response.setProductImage(deliveryDetail.getProduct().getImage());
+        response.setTotalAmount(deliveryDetail.getTotalAmount());
+        response.setTotalPrice(deliveryDetail.getTotalPrice());
+        return response;
+    }
 
 
 }

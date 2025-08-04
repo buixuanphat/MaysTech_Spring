@@ -1,7 +1,6 @@
 package com.bxp.MaysTech_Spring.controller;
 
 import com.bxp.MaysTech_Spring.dto.ApiResponse;
-import com.bxp.MaysTech_Spring.dto.user_product.ItemProductDTO;
 import com.bxp.MaysTech_Spring.dto.user_product.UserProductCreateRequest;
 import com.bxp.MaysTech_Spring.dto.user_product.UserProductResponse;
 import com.bxp.MaysTech_Spring.dto.user_product.UserProductTotalResponse;
@@ -28,12 +27,12 @@ public class UserProductController {
     }
 
     @GetMapping("/user-product/{userId}")
-    public ApiResponse<List<ItemProductDTO>> getProductInCart(@PathVariable int userId)
+    public ApiResponse<List<UserProductResponse>> getProductInCart(@PathVariable int userId)
     {
-        ApiResponse<List<ItemProductDTO>> apiResponse = new ApiResponse<>();
+        ApiResponse<List<UserProductResponse>> apiResponse = new ApiResponse<>();
         apiResponse.setStatusCode(MyApiResponse.OK.getCode());
         apiResponse.setMessage(MyApiResponse.OK.getMessage());
-        apiResponse.setData(userProductService.findCartItemsByUserId(userId));
+        apiResponse.setData(userProductService.getProductInCart(userId));
         return apiResponse;
     }
 

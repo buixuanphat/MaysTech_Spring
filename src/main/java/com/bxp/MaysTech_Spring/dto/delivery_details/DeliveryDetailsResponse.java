@@ -1,12 +1,17 @@
 package com.bxp.MaysTech_Spring.dto.delivery_details;
 
+import com.bxp.MaysTech_Spring.entity.Delivery;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+
 public class DeliveryDetailsResponse {
 
     private int id;
     private int deliveryId;
     private int productId;
-    private String name;
-    private String image;
+    private String productName;
+    private double productPrice;
+    private String productImage;
     private int totalAmount;
     private double totalPrice;
 
@@ -34,20 +39,28 @@ public class DeliveryDetailsResponse {
         this.productId = productId;
     }
 
-    public String getName() {
-        return name;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
-    public String getImage() {
-        return image;
+    public double getProductPrice() {
+        return productPrice;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setProductPrice(double productPrice) {
+        this.productPrice = productPrice;
+    }
+
+    public String getProductImage() {
+        return productImage;
+    }
+
+    public void setProductImage(String productImage) {
+        this.productImage = productImage;
     }
 
     public int getTotalAmount() {

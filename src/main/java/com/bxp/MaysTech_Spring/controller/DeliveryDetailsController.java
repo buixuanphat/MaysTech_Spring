@@ -21,7 +21,7 @@ public class DeliveryDetailsController {
         ApiResponse<List<DeliveryDetailsResponse>> apiResponse = new ApiResponse<>();
         apiResponse.setStatusCode(MyApiResponse.OK.getCode());
         apiResponse.setMessage(MyApiResponse.OK.getMessage());
-        apiResponse.setData(deliveryDetailsService.getDeliveringProduct(deliveryId));
+        apiResponse.setData(deliveryDetailsService.getProductInDelivery(deliveryId));
         return apiResponse;
     }
 

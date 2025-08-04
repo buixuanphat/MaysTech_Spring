@@ -1,6 +1,5 @@
 package com.bxp.MaysTech_Spring.service;
 
-import com.bxp.MaysTech_Spring.dto.user_product.ItemProductDTO;
 import com.bxp.MaysTech_Spring.dto.user_product.UserProductCreateRequest;
 import com.bxp.MaysTech_Spring.dto.user_product.UserProductResponse;
 import com.bxp.MaysTech_Spring.dto.user_product.UserProductTotalResponse;
@@ -9,10 +8,12 @@ import com.bxp.MaysTech_Spring.entity.User;
 import com.bxp.MaysTech_Spring.entity.UserProduct;
 import com.bxp.MaysTech_Spring.exception.AppException;
 import com.bxp.MaysTech_Spring.exception.MyApiResponse;
+import com.bxp.MaysTech_Spring.repository.ProductRepository;
 import com.bxp.MaysTech_Spring.repository.UserProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,14 +22,13 @@ public class UserProductService {
     UserProductRepository  userProductRepository;
 
     @Autowired
-    ProductService productService;
-
-    @Autowired
     UserService userService;
+    @Autowired
+    private ProductRepository productRepository;
 
-    public List<ItemProductDTO> findCartItemsByUserId(int userId)
+    public List<UserProductResponse> getProductInCart(int userId)
     {
-        return userProductRepository.findCartItemsByUserId(userId);
+        return userProductRepository.getProductInCart(userId);
     }
 
     public UserProductResponse addProductToCart(UserProductCreateRequest request) {
@@ -42,7 +42,7 @@ public class UserProductService {
 
             User user = userService.getUserEntityById(request.getUsertId());
 
-            Product product = productService.getProductEntityById(request.getProductId());
+            Product product = productRepository.getById(request.getProductId());
             userProduct.setUser(user);
             userProduct.setProduct(product);
             userProduct.setAmount(1);
@@ -102,6 +102,21 @@ public class UserProductService {
     public UserProductTotalResponse getCartTotalByUserId(int id)
     {
         return userProductRepository.getCartTotalByUserId(id);
+    }
+
+    UserProductResponse convertEntityToResponse(UserProduct userProduct)
+    {
+        UserProductResponse response = new UserProductResponse();
+        response.setId(userProduct.getId());
+        response.setUserId(userProduct.getUser().getId());
+        response.setProductId(userProduct.getProduct().getId());
+        response.setProductName(userProduct.getProduct().getName());
+        response.setProductImage(userProduct.getProduct().getImage());
+        response.setProductPrice(userProduct.getProduct().getPrice());
+        response.setTotalPrice(userProduct.getProduct().getPrice()*userProduct.getAmount());
+        response.setAmount(userProduct.getAmount());
+        response.setChosen(userProduct.getIsChosen());
+        return response;
     }
 
 }

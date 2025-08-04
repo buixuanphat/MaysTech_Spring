@@ -38,15 +38,6 @@ public class User {
     @Column(name = "address_details", length = 100)
     private String addressDetails;
 
-    @Column(name = "province_id")
-    private Integer provinceId;
-
-    @Column(name = "district_id")
-    private Integer districtId;
-
-    @Column(name = "ward_id")
-    private Integer wardId;
-
     @Size(max = 10)
     @Column(name = "phone_number", length = 10)
     private String phoneNumber;
@@ -58,22 +49,6 @@ public class User {
     @Lob
     @Column(name = "avatar")
     private String avatar;
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public Integer getId() {
         return id;
@@ -123,36 +98,12 @@ public class User {
         this.ward = ward;
     }
 
-    public String getAdressDetails() {
+    public String getAddressDetails() {
         return addressDetails;
     }
 
-    public void setAdressDetails(String adressDetails) {
-        this.addressDetails = adressDetails;
-    }
-
-    public Integer getProvinceId() {
-        return provinceId;
-    }
-
-    public void setProvinceId(Integer provinceId) {
-        this.provinceId = provinceId;
-    }
-
-    public Integer getDistrictId() {
-        return districtId;
-    }
-
-    public void setDistrictId(Integer districtId) {
-        this.districtId = districtId;
-    }
-
-    public Integer getWardId() {
-        return wardId;
-    }
-
-    public void setWardId(Integer wardId) {
-        this.wardId = wardId;
+    public void setAddressDetails(String addressDetails) {
+        this.addressDetails = addressDetails;
     }
 
     public String getPhoneNumber() {
@@ -161,6 +112,22 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
 }

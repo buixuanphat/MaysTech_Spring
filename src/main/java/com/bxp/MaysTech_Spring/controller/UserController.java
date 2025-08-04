@@ -9,11 +9,11 @@ import com.bxp.MaysTech_Spring.entity.User;
 import com.bxp.MaysTech_Spring.exception.MyApiResponse;
 import com.bxp.MaysTech_Spring.service.UserService;
 import com.bxp.MaysTech_Spring.utils.JwtUtil;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class UserController {
@@ -117,6 +117,16 @@ public class UserController {
         apiResponse.setStatusCode(MyApiResponse.OK.getCode());
         apiResponse.setMessage(MyApiResponse.OK.getMessage());
         apiResponse.setData(userService.updateUser(userId, request));
+        return apiResponse;
+    }
+
+    @PatchMapping("/users/avatar/{userId}")
+    public ApiResponse<UserResponse> updateAvatar(@PathVariable("userId") int userId, @RequestBody Map<String, String> request)
+    {
+        ApiResponse<UserResponse> apiResponse = new ApiResponse<>();
+        apiResponse.setStatusCode(MyApiResponse.OK.getCode());
+        apiResponse.setMessage(MyApiResponse.OK.getMessage());
+        apiResponse.setData(userService.updateAvatar(userId, request.get("avatar")));
         return apiResponse;
     }
 

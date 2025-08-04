@@ -5,17 +5,15 @@ public class UserUpdateRequest {
     private String district;
     private String ward;
     private String addressDetails;
-    private int provinceId;
-    private int districtId;
-    private int wardId;
     private String phoneNumber;
+    private String avatar;
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getProvince() {
@@ -50,27 +48,11 @@ public class UserUpdateRequest {
         this.addressDetails = addressDetails;
     }
 
-    public int getProvinceId() {
-        return provinceId;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setProvinceId(int provinceId) {
-        this.provinceId = provinceId;
-    }
-
-    public int getDistrictId() {
-        return districtId;
-    }
-
-    public void setDistrictId(int districtId) {
-        this.districtId = districtId;
-    }
-
-    public int getWardId() {
-        return wardId;
-    }
-
-    public void setWardId(int wardId) {
-        this.wardId = wardId;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

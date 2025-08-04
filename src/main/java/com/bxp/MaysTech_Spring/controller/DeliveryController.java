@@ -18,7 +18,7 @@ public class DeliveryController {
     DeliveryService deliveryService;
 
     @GetMapping("/deliveries/{userId}")
-    public ApiResponse<List<DeliveryResponse>> getDeliveriesList(@PathVariable int userId, @Nullable @RequestParam String status)
+    public ApiResponse<List<DeliveryResponse>> getDeliveriesOfUserIdAndStatus(@PathVariable int userId, @Nullable @RequestParam String status)
     {
         ApiResponse<List<DeliveryResponse>> apiResponse = new ApiResponse<>();
         apiResponse.setStatusCode(MyApiResponse.OK.getCode());
@@ -26,7 +26,7 @@ public class DeliveryController {
 
         if(status!=null)
         {
-            apiResponse.setData(deliveryService.getDeliveryByStatus(userId,status));
+            apiResponse.setData(deliveryService.getDeliveryOfUserByStatus(userId,status));
             return apiResponse;
         }
 
@@ -54,6 +54,15 @@ public class DeliveryController {
         return apiResponse;
     }
 
+    @GetMapping("/deliveries")
+    public ApiResponse<List<DeliveryResponse>> getAllDeliveryByStatus(@RequestParam("status") String status)
+    {
+        ApiResponse<List<DeliveryResponse>> apiResponse = new ApiResponse<>();
+        apiResponse.setStatusCode(MyApiResponse.OK.getCode());
+        apiResponse.setMessage(MyApiResponse.OK.getMessage());
+        apiResponse.setData(deliveryService.getAllDeliveriesByStatus(status));
+        return apiResponse;
+    }
 
 
 }

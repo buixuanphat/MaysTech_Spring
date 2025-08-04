@@ -7,21 +7,18 @@ public class UserResponse {
     private String email;
     private String ward;
     private String district;
-
-    public String getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(String district) {
-        this.district = district;
-    }
-
     private String addressDetails;
     private String province;
-    private Integer provinceId;
-    private Integer districtId;
-    private Integer wardId;
     private String phoneNumber;
+    private String avatar;
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
     public Integer getId() {
         return id;
@@ -39,13 +36,20 @@ public class UserResponse {
         this.email = email;
     }
 
-
     public String getWard() {
         return ward;
     }
 
     public void setWard(String ward) {
         this.ward = ward;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
     }
 
     public String getAddressDetails() {
@@ -62,30 +66,6 @@ public class UserResponse {
 
     public void setProvince(String province) {
         this.province = province;
-    }
-
-    public Integer getProvinceId() {
-        return provinceId;
-    }
-
-    public void setProvinceId(Integer provinceId) {
-        this.provinceId = provinceId;
-    }
-
-    public Integer getDistrictId() {
-        return districtId;
-    }
-
-    public void setDistrictId(Integer districtId) {
-        this.districtId = districtId;
-    }
-
-    public Integer getWardId() {
-        return wardId;
-    }
-
-    public void setWardId(Integer wardId) {
-        this.wardId = wardId;
     }
 
     public String getPhoneNumber() {

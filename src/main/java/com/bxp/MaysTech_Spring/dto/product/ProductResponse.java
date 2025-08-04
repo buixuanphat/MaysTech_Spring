@@ -11,11 +11,17 @@ import org.hibernate.annotations.OnDeleteAction;
 
 public class ProductResponse {
 
-    private Integer id;
+    private int id;
     private String name;
-    private Double price;
-    private String description;
+    private double price;
     private String image;
+    private String description;
+    private int stock;
+    private double salePrice;
+    private boolean isSale;
+    private boolean active;
+    private int categoryId;
+    private int brandId;
 
     public String getImage() {
         return image;
@@ -25,19 +31,11 @@ public class ProductResponse {
         this.image = image;
     }
 
-    private Integer stock;
-    private Double salePrice;
-    private Boolean isSale;
-    private Boolean active;
-    private Double weight;
-    private int categoryId;
-    private int brandId;
-
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -49,11 +47,11 @@ public class ProductResponse {
         this.name = name;
     }
 
-    public Double getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -65,44 +63,36 @@ public class ProductResponse {
         this.description = description;
     }
 
-    public Integer getStock() {
+    public int getStock() {
         return stock;
     }
 
-    public void setStock(Integer stock) {
+    public void setStock(int stock) {
         this.stock = stock;
     }
 
-    public Double getSalePrice() {
+    public double getSalePrice() {
         return salePrice;
     }
 
-    public void setSalePrice(Double salePrice) {
+    public void setSalePrice(double salePrice) {
         this.salePrice = salePrice;
     }
 
-    public Boolean getSale() {
+    public boolean isSale() {
         return isSale;
     }
 
-    public void setSale(Boolean sale) {
+    public void setSale(boolean sale) {
         isSale = sale;
     }
 
-    public Boolean getActive() {
+    public boolean isActive() {
         return active;
     }
 
-    public void setActive(Boolean active) {
+    public void setActive(boolean active) {
         this.active = active;
-    }
-
-    public Double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(Double weight) {
-        this.weight = weight;
     }
 
     public int getCategoryId() {

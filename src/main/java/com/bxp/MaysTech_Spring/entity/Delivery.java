@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.time.Instant;
 import java.time.LocalDate;
 
 @Entity
@@ -46,10 +47,6 @@ public class Delivery {
     @Column(name = "total_amount", nullable = false)
     private Integer totalAmount;
 
-    @NotNull
-    @Column(name = "total_weight", nullable = false)
-    private Double totalWeight;
-
     @ColumnDefault("0")
     @Column(name = "has_feedback")
     private Boolean hasFeedback;
@@ -57,30 +54,6 @@ public class Delivery {
     @Size(max = 100)
     @Column(name = "address", length = 100)
     private String address;
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Boolean getHasFeedback() {
-        return hasFeedback;
-    }
-
-    public void setHasFeedback(Boolean hasFeedback) {
-        this.hasFeedback = hasFeedback;
-    }
-
-    public Double getTotalWeight() {
-        return totalWeight;
-    }
-
-    public void setTotalWeight(Double totalWeight) {
-        this.totalWeight = totalWeight;
-    }
 
     public Integer getId() {
         return id;
@@ -144,6 +117,22 @@ public class Delivery {
 
     public void setTotalAmount(Integer totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    public Boolean getHasFeedback() {
+        return hasFeedback;
+    }
+
+    public void setHasFeedback(Boolean hasFeedback) {
+        this.hasFeedback = hasFeedback;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
 }

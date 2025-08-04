@@ -1,12 +1,5 @@
 package com.bxp.MaysTech_Spring.dto.comment;
 
-import com.bxp.MaysTech_Spring.entity.Product;
-import com.bxp.MaysTech_Spring.entity.User;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 public class CreateCommentRequest {
 
     private int userId;

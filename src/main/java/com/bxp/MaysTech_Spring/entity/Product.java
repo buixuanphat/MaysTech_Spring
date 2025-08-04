@@ -45,10 +45,6 @@ public class Product {
     @Column(name = "active", nullable = false)
     private Boolean active = false;
 
-    @NotNull
-    @Column(name = "weight", nullable = false)
-    private Double weight;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.SET_NULL)
     @JoinColumn(name = "category_id")
@@ -126,14 +122,6 @@ public class Product {
 
     public void setActive(Boolean active) {
         this.active = active;
-    }
-
-    public Double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(Double weight) {
-        this.weight = weight;
     }
 
     public Category getCategory() {

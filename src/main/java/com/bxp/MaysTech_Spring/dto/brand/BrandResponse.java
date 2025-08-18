@@ -3,12 +3,10 @@ package com.bxp.MaysTech_Spring.dto.brand;
 public class BrandResponse {
     private int id;
     private String name;
-    private String logo;
 
-    public BrandResponse(int id, String name, String logo) {
+    public BrandResponse(int id, String name) {
         this.id = id;
         this.name = name;
-        this.logo = logo;
     }
 
     public int getId() {
@@ -27,11 +25,4 @@ public class BrandResponse {
         this.name = name;
     }
 
-    public String getLogo() {
-        return logo;
-    }
-
-    public void setLogo(String logo) {
-        this.logo = logo;
-    }
 }

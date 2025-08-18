@@ -45,7 +45,7 @@ public class BrandController {
         return apiResponse;
     }
 
-    @PutMapping("/brands/{brandId}")
+    @PatchMapping("/brands/{brandId}")
     public ApiResponse<Brand> updateBrand(@PathVariable int brandId, @RequestBody BrandRequest request)
     {
         ApiResponse<Brand> apiResponse = new ApiResponse<>();

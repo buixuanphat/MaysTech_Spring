@@ -91,6 +91,7 @@ public class UserService {
         user.setWard(request.getWard());
         user.setPhoneNumber(request.getPhoneNumber());
         user.setAddressDetails(request.getAddressDetails());
+        user.setUsername(request.getUsername());
 
         userRepository.save(user);
 
@@ -122,6 +123,7 @@ public class UserService {
         response.setAddressDetails(user.getAddressDetails());
         response.setPhoneNumber(user.getPhoneNumber());
         response.setAvatar(user.getAvatar());
+        response.setUsername(user.getUsername());
         return response;
     }
 }

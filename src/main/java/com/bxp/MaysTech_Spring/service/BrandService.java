@@ -24,7 +24,6 @@ public class BrandService {
 
         Brand brand = new Brand();
         brand.setName(request.getName());
-        brand.setLogo(request.getLogo());
         return brandRepository.save(brand);
     }
 
@@ -46,7 +45,6 @@ public class BrandService {
         }
         Brand brand = this.getBrandById(brandId);
         brand.setName(request.getName());
-        brand.setLogo(request.getLogo());
         return this.brandRepository.save(brand);
     }
 

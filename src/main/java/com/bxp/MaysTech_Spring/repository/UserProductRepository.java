@@ -12,23 +12,25 @@ import java.util.List;
 
 @Repository
 public interface UserProductRepository extends JpaRepository<UserProduct, Integer> {
-    UserProduct findByProduct_IdAndUser_Id(int productId, int usertId);
-
-    @Query("SELECT new com.bxp.MaysTech_Spring.dto.user_product.UserProductResponse(" +
-            "up.id, up.user.id, p.id, p.name, p.image ,p.price, p.price * up.amount, up.amount ,up.isChosen) " +
-            "FROM UserProduct up " +
-            "JOIN up.product p " +
-            "WHERE up.user.id = :userId " +
-            "ORDER BY up.isChosen DESC")
-
-    List<UserProductResponse> getProductInCart(@Param("userId") int userId);
+    UserProduct findByProduct_IdAndUser_Id(int productId, int userId);
 
 
-    @Query("SELECT new com.bxp.MaysTech_Spring.dto.user_product.UserProductTotalResponse(" +
-            "CAST(COUNT(up.id) as int), " +
-            "COALESCE(SUM(up.amount * p.price), 0)) " +
-            "FROM UserProduct up JOIN up.product p " +
-            "WHERE up.isChosen = true AND up.user.id = :userId")
-    UserProductTotalResponse getCartTotalByUserId(@Param("userId") int userId);
+    @Query(value = """
+    SELECT
+        SUM(up.amount) AS totalAmount,
+        SUM(up.amount * p.price * (1 - COALESCE(s.percent, 0)/100)) AS totalPrice
+    FROM product p
+    JOIN user_product up ON p.id = up.product_id
+    LEFT JOIN detail_sale ds ON p.id = ds.product_id
+    LEFT JOIN sale s ON ds.sale_id = s.id
+    WHERE up.is_chosen = true and up.user_id = :userId
+    """, nativeQuery = true)
+    Object getCartTotalByUserId(@Param("userId") int userId);
 
+
+
+
+    List<UserProduct> findAllByUser_Id(Integer userId);
+
+    List<UserProduct> findAllByUser_IdAndIsChosen(Integer userId, Boolean isChosen);
 }

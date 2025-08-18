@@ -1,9 +1,8 @@
 package com.bxp.MaysTech_Spring.dto.delivery;
 
+import java.time.LocalDate;
 
-public class DeliveryResponse {
-
-
+public class DeliveryWithFirstProductResponse {
     private Integer id;
     private Integer userId;
     private String startDate;
@@ -17,12 +16,18 @@ public class DeliveryResponse {
     private String phoneNumber;
     private String address;
 
-    public String getAddress() {
-        return address;
+    private int productId;
+    private String productName;
+    private String productImage;
+    private int productTotalAmount;
+    private double productTotalPrice;
+
+    public int getProductId() {
+        return productId;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
     public Integer getId() {
@@ -111,5 +116,45 @@ public class DeliveryResponse {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getProductImage() {
+        return productImage;
+    }
+
+    public void setProductImage(String productImage) {
+        this.productImage = productImage;
+    }
+
+    public int getProductTotalAmount() {
+        return productTotalAmount;
+    }
+
+    public void setProductTotalAmount(int productTotalAmount) {
+        this.productTotalAmount = productTotalAmount;
+    }
+
+    public double getProductTotalPrice() {
+        return productTotalPrice;
+    }
+
+    public void setProductTotalPrice(double productTotalPrice) {
+        this.productTotalPrice = productTotalPrice;
     }
 }

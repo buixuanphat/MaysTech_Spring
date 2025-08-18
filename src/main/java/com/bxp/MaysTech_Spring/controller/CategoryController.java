@@ -46,7 +46,7 @@ public class CategoryController {
         return apiResponse;
     }
 
-    @PutMapping("/categories/{catId}")
+    @PatchMapping ("/categories/{catId}")
     public ApiResponse<Category> updateCategory(@PathVariable int catId, @RequestBody CategoryRequest request)
     {
         ApiResponse<Category> apiResponse = new ApiResponse<>();

@@ -1,5 +1,6 @@
 package com.bxp.MaysTech_Spring.service;
 
+import com.bxp.MaysTech_Spring.dto.product_highlight.ProductHighlightCreateRequest;
 import com.bxp.MaysTech_Spring.dto.product_highlight.ProductHighlightResponse;
 import com.bxp.MaysTech_Spring.entity.ProductHighlight;
 import com.bxp.MaysTech_Spring.repository.ProductHighlightRepository;
@@ -23,6 +24,21 @@ public class ProductHighlightService {
         List<ProductHighlight> productHighlightList = productHighlightRepository.findAll();
         return productHighlightList.stream().map(this::convertEntityToResponse).toList();
     }
+
+    public ProductHighlightResponse addProductHighLight(ProductHighlightCreateRequest request)
+    {
+        ProductHighlight productHighlight = new  ProductHighlight();
+        productHighlight.setProduct(productRepository.getById(request.getProductId()));
+        productHighlight.setImage(request.getImage());
+        return convertEntityToResponse(productHighlightRepository.save(productHighlight));
+    }
+
+    public void deleteProductHighLight(int id)
+    {
+        ProductHighlight productHighlight = productHighlightRepository.getById(id);
+        productHighlightRepository.delete(productHighlight);
+    }
+
 
     ProductHighlightResponse convertEntityToResponse(ProductHighlight productHighlight) {
         ProductHighlightResponse productHighlightResponse = new ProductHighlightResponse();

@@ -4,13 +4,12 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "product")
 public class Product {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -32,33 +31,18 @@ public class Product {
     @Column(name = "stock", nullable = false)
     private Integer stock;
 
-    @Column(name = "sale_price")
-    private Double salePrice;
-
-    @NotNull
-    @ColumnDefault("0")
-    @Column(name = "is_sale", nullable = false)
-    private Boolean isSale = false;
-
     @NotNull
     @ColumnDefault("1")
     @Column(name = "active", nullable = false)
     private Boolean active = false;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.SET_NULL)
     @JoinColumn(name = "category_id")
     private Category category;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.SET_NULL)
     @JoinColumn(name = "brand_id")
     private Brand brand;
-
-    @NotNull
-    @Lob
-    @Column(name = "image", nullable = false)
-    private String image;
 
     public Integer getId() {
         return id;
@@ -100,22 +84,6 @@ public class Product {
         this.stock = stock;
     }
 
-    public Double getSalePrice() {
-        return salePrice;
-    }
-
-    public void setSalePrice(Double salePrice) {
-        this.salePrice = salePrice;
-    }
-
-    public Boolean getIsSale() {
-        return isSale;
-    }
-
-    public void setIsSale(Boolean isSale) {
-        this.isSale = isSale;
-    }
-
     public Boolean getActive() {
         return active;
     }
@@ -138,14 +106,6 @@ public class Product {
 
     public void setBrand(Brand brand) {
         this.brand = brand;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
 }

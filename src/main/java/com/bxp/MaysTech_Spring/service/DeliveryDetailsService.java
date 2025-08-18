@@ -25,6 +25,9 @@ public class DeliveryDetailsService {
     DeliveryRepository deliveryRepository;
 
     @Autowired
+    ProductService productService;
+
+    @Autowired
     ProductRepository productRepository;
 
     public DeliveryDetailsResponse getById(int id)
@@ -39,13 +42,13 @@ public class DeliveryDetailsService {
         return deliveryDetails.stream().map(this::convertEntityToResponse).collect(Collectors.toList());
     }
 
-    public List<DeliveryDetailsResponse> addDeliveryDetails(int deliveryId, List<DeliveryDetailsCreateRequest> requests)
+    public List<DeliveryDetailsResponse> addDeliveryDetails(List<DeliveryDetailsCreateRequest> requests)
     {
         List<DeliveryDetailsResponse> responses = new ArrayList<>();
 
         requests.forEach(request -> {
             DeliveryDetail deliveryDetail = new DeliveryDetail();
-            deliveryDetail.setDelivery(deliveryRepository.getById(deliveryId));
+            deliveryDetail.setDelivery(deliveryRepository.getById(request.getDeliveryId()));
             deliveryDetail.setProduct(productRepository.getReferenceById(request.getProductId()));
             deliveryDetail.setTotalAmount(request.getTotalAmount());
             deliveryDetail.setTotalPrice(request.getTotalPrice());
@@ -53,8 +56,15 @@ public class DeliveryDetailsService {
             responses.add(getById(deliveryDetail.getId()));
         });
 
-        return getProductInDelivery(deliveryId);
+        return getProductInDelivery(requests.get(0).getDeliveryId());
     }
+
+    public DeliveryDetailsResponse getFirstProduct(int deliveryId)
+    {
+        DeliveryDetail firstProduct = deliveryDetailsRepository.findFirstByDelivery_Id(deliveryId);
+        return convertEntityToResponse(firstProduct);
+    }
+
 
     DeliveryDetailsResponse convertEntityToResponse(DeliveryDetail deliveryDetail)
     {
@@ -64,10 +74,11 @@ public class DeliveryDetailsService {
         response.setProductId(deliveryDetail.getProduct().getId());
         response.setProductName(deliveryDetail.getProduct().getName());
         response.setProductPrice(deliveryDetail.getProduct().getPrice());
-        response.setProductImage(deliveryDetail.getProduct().getImage());
         response.setTotalAmount(deliveryDetail.getTotalAmount());
         response.setTotalPrice(deliveryDetail.getTotalPrice());
+        response.setProductImage(productService.getProductById(deliveryDetail.getProduct().getId()).getImageUrl());
         return response;
+
     }
 
 

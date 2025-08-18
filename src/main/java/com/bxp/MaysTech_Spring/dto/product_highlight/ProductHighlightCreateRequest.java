@@ -1,7 +1,5 @@
 package com.bxp.MaysTech_Spring.dto.product_highlight;
 
-import com.bxp.MaysTech_Spring.entity.Product;
-
 public class ProductHighlightCreateRequest {
 
     private int productId;

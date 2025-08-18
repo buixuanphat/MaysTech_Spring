@@ -25,13 +25,13 @@ public class DeliveryDetailsController {
         return apiResponse;
     }
 
-    @PostMapping("/delivery-details/{deliveryId}")
-    public ApiResponse<List<DeliveryDetailsResponse>> startDelivering(@PathVariable int deliveryId , @RequestBody List<DeliveryDetailsCreateRequest> requests)
+    @PostMapping("/delivery-details")
+    public ApiResponse<List<DeliveryDetailsResponse>> startDelivering(@RequestBody List<DeliveryDetailsCreateRequest> requests)
     {
         ApiResponse<List<DeliveryDetailsResponse>> apiResponse = new ApiResponse<>();
         apiResponse.setStatusCode(MyApiResponse.CREATED.getCode());
         apiResponse.setMessage(MyApiResponse.CREATED.getMessage());
-        apiResponse.setData(deliveryDetailsService.addDeliveryDetails(deliveryId ,requests));
+        apiResponse.setData(deliveryDetailsService.addDeliveryDetails(requests));
         return apiResponse;
     }
 

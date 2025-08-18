@@ -67,6 +67,17 @@ public class UserProductController {
         return apiResponse;
     }
 
+    @DeleteMapping("/user-product/delete/{userId}")
+    public ApiResponse<Void> deleteSelected(@PathVariable int userId)
+    {
+        ApiResponse<Void> apiResponse = new ApiResponse<>();
+        apiResponse.setStatusCode(MyApiResponse.NO_CONTENT.getCode());
+        apiResponse.setMessage(MyApiResponse.NO_CONTENT.getMessage());
+        userProductService.deleteSelected(userId);
+        return apiResponse;
+    }
+
+
 
 
 }

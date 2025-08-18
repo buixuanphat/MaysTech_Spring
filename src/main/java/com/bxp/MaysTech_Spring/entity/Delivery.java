@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.time.Instant;
 import java.time.LocalDate;
 
 @Entity
@@ -23,10 +22,10 @@ public class Delivery {
 
     @NotNull
     @Column(name = "start_date", nullable = false)
-    private LocalDate startDate;
+    private String startDate;
 
     @Column(name = "received_date")
-    private LocalDate receivedDate;
+    private String receivedDate;
 
     @NotNull
     @ColumnDefault("'PREPARING'")
@@ -52,6 +51,14 @@ public class Delivery {
     private Boolean hasFeedback;
 
     @Size(max = 100)
+    @Column(name = "username", length = 100)
+    private String username;
+
+    @Size(max = 10)
+    @Column(name = "phone_number", length = 10)
+    private String phoneNumber;
+
+    @Size(max = 100)
     @Column(name = "address", length = 100)
     private String address;
 
@@ -71,19 +78,19 @@ public class Delivery {
         this.user = user;
     }
 
-    public LocalDate getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getReceivedDate() {
+    public String getReceivedDate() {
         return receivedDate;
     }
 
-    public void setReceivedDate(LocalDate receivedDate) {
+    public void setReceivedDate(String receivedDate) {
         this.receivedDate = receivedDate;
     }
 
@@ -125,6 +132,22 @@ public class Delivery {
 
     public void setHasFeedback(Boolean hasFeedback) {
         this.hasFeedback = hasFeedback;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getAddress() {

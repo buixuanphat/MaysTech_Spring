@@ -11,31 +11,31 @@ import org.hibernate.annotations.OnDeleteAction;
 
 public class ProductResponse {
 
-    private int id;
+
+    private Integer id;
     private String name;
-    private double price;
-    private String image;
+    private String imageUrl;
+    private Double price;
     private String description;
-    private int stock;
-    private double salePrice;
-    private boolean isSale;
-    private boolean active;
+    private Integer stock;
+    private Boolean active;
     private int categoryId;
     private int brandId;
+    private Double salePrice;
 
-    public String getImage() {
-        return image;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -47,11 +47,11 @@ public class ProductResponse {
         this.name = name;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -63,35 +63,19 @@ public class ProductResponse {
         this.description = description;
     }
 
-    public int getStock() {
+    public Integer getStock() {
         return stock;
     }
 
-    public void setStock(int stock) {
+    public void setStock(Integer stock) {
         this.stock = stock;
     }
 
-    public double getSalePrice() {
-        return salePrice;
-    }
-
-    public void setSalePrice(double salePrice) {
-        this.salePrice = salePrice;
-    }
-
-    public boolean isSale() {
-        return isSale;
-    }
-
-    public void setSale(boolean sale) {
-        isSale = sale;
-    }
-
-    public boolean isActive() {
+    public Boolean getActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 
@@ -109,5 +93,13 @@ public class ProductResponse {
 
     public void setBrandId(int brandId) {
         this.brandId = brandId;
+    }
+
+    public Double getSalePrice() {
+        return salePrice;
+    }
+
+    public void setSalePrice(Double salePrice) {
+        this.salePrice = salePrice;
     }
 }

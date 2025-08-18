@@ -14,8 +14,17 @@ public class ProductRequest {
     private String description;
     private String image;
     private Integer stock;
+    private Boolean active;
     private int categoryId;
     private int brandId;
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 
     public String getName() {
         return name;

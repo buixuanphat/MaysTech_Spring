@@ -11,6 +11,15 @@ public class UserResponse {
     private String province;
     private String phoneNumber;
     private String avatar;
+    private String username;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public String getAvatar() {
         return avatar;

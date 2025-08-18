@@ -2,21 +2,18 @@ package com.bxp.MaysTech_Spring.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name = "brand")
-public class Brand {
+@Table(name = "sale")
+public class Sale {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Size(max = 100)
     @NotNull
-    @Column(name = "name", nullable = false, length = 100)
-    private String name;
-
+    @Column(name = "percent", nullable = false)
+    private Double percent;
 
     public Integer getId() {
         return id;
@@ -26,12 +23,12 @@ public class Brand {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Double getPercent() {
+        return percent;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPercent(Double percent) {
+        this.percent = percent;
     }
 
 }

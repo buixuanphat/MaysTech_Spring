@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface ProductImageRepository extends JpaRepository<ProductImage,Integer> {
     List<ProductImage> findByProduct_Id(Integer id);
+
+    ProductImage getFirstByProduct_Id(Integer productId);
 }

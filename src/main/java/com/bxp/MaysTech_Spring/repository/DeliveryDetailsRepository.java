@@ -10,4 +10,5 @@ import java.util.List;
 public interface DeliveryDetailsRepository extends JpaRepository<DeliveryDetail, Integer> {
     List<DeliveryDetail> findAllByDelivery_Id(int deliveryId);
 
+    DeliveryDetail findFirstByDelivery_Id(Integer deliveryId);
 }

@@ -73,11 +73,11 @@ public class UserController {
             String email = jwtUtil.extractEmail(token);
 
             // Tìm user theo email
-            User user = userService.getUserEntityByEmail(email); // viết thêm hàm này trong UserService
+            User user = userService.getUserEntityByEmail(email);
 
             apiResponse.setStatusCode(200);
             apiResponse.setMessage("Lấy thông tin thành công");
-            apiResponse.setData(userService.toUserResponse(user)); // trả về DTO
+            apiResponse.setData(userService.toUserResponse(user));
             return apiResponse;
 
         } catch (Exception e) {

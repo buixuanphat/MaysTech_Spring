@@ -1,9 +1,5 @@
 package com.bxp.MaysTech_Spring.dto.delivery_details;
 
-import com.bxp.MaysTech_Spring.entity.Delivery;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-
 public class DeliveryDetailsResponse {
 
     private int id;

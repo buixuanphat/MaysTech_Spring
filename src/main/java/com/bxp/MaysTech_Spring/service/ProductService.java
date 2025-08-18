@@ -2,21 +2,18 @@ package com.bxp.MaysTech_Spring.service;
 
 import com.bxp.MaysTech_Spring.dto.product.ProductRequest;
 import com.bxp.MaysTech_Spring.dto.product.ProductResponse;
+import com.bxp.MaysTech_Spring.entity.DetailSale;
 import com.bxp.MaysTech_Spring.entity.Product;
+import com.bxp.MaysTech_Spring.entity.ProductImage;
+import com.bxp.MaysTech_Spring.entity.Sale;
 import com.bxp.MaysTech_Spring.exception.AppException;
 import com.bxp.MaysTech_Spring.exception.MyApiResponse;
-import com.bxp.MaysTech_Spring.repository.BrandRepository;
-import com.bxp.MaysTech_Spring.repository.CategoryRepository;
-import com.bxp.MaysTech_Spring.repository.ProductRepository;
-import jakarta.annotation.Nullable;
+import com.bxp.MaysTech_Spring.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -28,7 +25,15 @@ public class ProductService {
 
     @Autowired
     CategoryRepository categoryRepository;
-    private ResourcePatternResolver resourcePatternResolver;
+
+    @Autowired
+    ProductImageRepository productImageRepository;
+
+    @Autowired
+    SaleDetailRepository saleDetailRepository;
+
+    @Autowired
+    SaleRepository saleRepository;
 
     public ProductResponse createProduct(ProductRequest request) {
         if (productRepository.existsByName(request.getName())) {
@@ -38,54 +43,79 @@ public class ProductService {
         product.setName(request.getName());
         product.setPrice(request.getPrice());
         product.setDescription(request.getDescription());
-        product.setImage(request.getImage());
         product.setStock(request.getStock());
+        product.setActive(true);
         product.setBrand(brandRepository.getById(request.getBrandId()));
         product.setCategory(categoryRepository.getById(request.getCategoryId()));
-        return convertEntityToResponse(productRepository.save(product));
+        ProductImage image = productImageRepository.getFirstByProduct_Id(product.getId());
+        DetailSale detailSale = saleDetailRepository.getFirstByProduct_Id(product.getId());
+        Sale sale = null;
+        if(detailSale != null) {
+            sale = saleRepository.getById(detailSale.getId());
+        }
+        return convertEntityToResponse(productRepository.save(product), image, sale);
     }
+
+
 
     public ProductResponse getProductById(int id) {
-        Product product = productRepository.findById(id).orElseThrow(() -> new AppException(MyApiResponse.NOT_FOUND));
-        return convertEntityToResponse(product);
+        Product product = productRepository.getById(id);
+        ProductImage image = productImageRepository.getFirstByProduct_Id(id);
+        DetailSale detailSale = saleDetailRepository.getFirstByProduct_Id(id);
+        Sale sale = null;
+        if(detailSale != null) {
+            sale = saleRepository.getById(detailSale.getSale().getId());
+        }
+        return convertEntityToResponse(product, image, sale);
     }
+
+
+
 
     public List<ProductResponse> getProducts() {
-        return productRepository.findAll().stream().map(this::convertEntityToResponse).collect(Collectors.toList());
-    }
-
-
-
-    public List<ProductResponse> getProductsByCategory(int categoryId, @Nullable String ordered) {
-        List<Product> productList = new ArrayList<>(productRepository.findByCategory_Id(categoryId));
-
-        if (ordered != null) {
-            if (ordered.equals("asc")) {
-                productList.sort(Comparator.comparing(Product::getPrice));
-            } else if (ordered.equals("desc")) {
-                productList.sort(Comparator.comparing(Product::getPrice).reversed());
+        List<Product> productList = productRepository.findAll();
+        return productList.stream().map(product ->
+        {
+            ProductImage image = productImageRepository.getFirstByProduct_Id(product.getId());
+            DetailSale detailSale = saleDetailRepository.getFirstByProduct_Id(product.getId());
+            Sale sale = null;
+            if(detailSale != null) {
+                sale = saleRepository.getById(detailSale.getSale().getId());
             }
-        }
-
-        return productList.stream()
-                .map(this::convertEntityToResponse)
-                .collect(Collectors.toList());
+            return convertEntityToResponse(product, image, sale);
+        }).toList();
     }
 
 
-    public List<ProductResponse> getProductsByCategoryAndBrand(int categoryId, int brandId, @Nullable String ordered) {
+
+    public List<ProductResponse> getProductsByCategory(int categoryId) {
+        List<Product> productList = new ArrayList<>(productRepository.findByCategory_Id(categoryId));
+        return productList.stream().map(product ->
+        {
+            ProductImage image = productImageRepository.getFirstByProduct_Id(product.getId());
+            DetailSale detailSale = saleDetailRepository.getFirstByProduct_Id(product.getId());
+            Sale sale = null;
+            if(detailSale != null) {
+                sale = saleRepository.getById(detailSale.getSale().getId());
+            }
+            return convertEntityToResponse(product, image, sale);
+        }).toList();
+    }
+
+
+    public List<ProductResponse> getProductsByCategoryAndBrand(int categoryId, int brandId) {
 
         List<Product> productList = new ArrayList<>(productRepository.findByCategory_IdAndBrand_Id(categoryId, brandId));
-
-        if (ordered != null) {
-            if (ordered.equals("asc")) {
-                productList.sort(Comparator.comparing(Product::getPrice));
-            } else if (ordered.equals("desc")) {
-                productList.sort(Comparator.comparing(Product::getPrice).reversed());
+        return productList.stream().map(product ->
+        {
+            ProductImage image = productImageRepository.getFirstByProduct_Id(product.getId());
+            DetailSale detailSale = saleDetailRepository.getFirstByProduct_Id(product.getId());
+            Sale sale = null;
+            if(detailSale != null) {
+                sale = saleRepository.getById(detailSale.getSale().getId());
             }
-        }
-
-        return productList.stream().map(this::convertEntityToResponse).collect(Collectors.toList());
+            return convertEntityToResponse(product, image, sale);
+        }).toList();
 
 
     }
@@ -95,29 +125,88 @@ public class ProductService {
         product.setName(request.getName());
         product.setPrice(request.getPrice());
         product.setDescription(request.getDescription());
-        product.setImage(request.getImage());
         product.setStock(request.getStock());
+        product.setActive(request.getActive());
         product.setBrand(brandRepository.getById(request.getBrandId()));
         product.setCategory(categoryRepository.getById(request.getCategoryId()));
-        return convertEntityToResponse(productRepository.save(product));
+
+        ProductImage image = productImageRepository.getFirstByProduct_Id(product.getId());
+        DetailSale detailSale = saleDetailRepository.getFirstByProduct_Id(product.getId());
+        Sale sale = null;
+        if(detailSale != null) {
+            sale = saleRepository.getById(detailSale.getSale().getId());
+        }
+        return convertEntityToResponse(productRepository.save(product), image, sale);
     }
 
-    ProductResponse convertEntityToResponse(Product product) {
-        ProductResponse productResponse = new ProductResponse();
-        productResponse.setId(product.getId());
-        productResponse.setName(product.getName());
-        productResponse.setPrice(product.getPrice());
-        productResponse.setImage(product.getImage());
-        productResponse.setDescription(product.getDescription());
-        productResponse.setStock(product.getStock());
-        if(product.getSalePrice() != null) {
-            productResponse.setSalePrice(product.getSalePrice());
+
+
+
+    public List<ProductResponse> getNewProduct()
+    {
+        return productRepository.getNewProduct().stream().map(p ->
+        {
+            ProductImage image = productImageRepository.getFirstByProduct_Id(p.getId());
+            DetailSale detailSale = saleDetailRepository.getFirstByProduct_Id(p.getId());
+            Sale sale = null;
+            if(detailSale != null) {
+                sale = saleRepository.getById(detailSale.getSale().getId());
+            }
+            return convertEntityToResponse(p,image, sale);
+        }).toList();
+    }
+
+
+    public List<ProductResponse> searchProductByName(String kw)
+    {
+        return productRepository.findAllByNameContains(kw).stream().map(p ->
+        {
+            ProductImage image = productImageRepository.getFirstByProduct_Id(p.getId());
+            DetailSale detailSale = saleDetailRepository.getFirstByProduct_Id(p.getId());
+            Sale sale = null;
+            if(detailSale != null) {
+                sale = saleRepository.getById(detailSale.getSale().getId());
+            }
+            return convertEntityToResponse(p, image, sale);
+        }).toList();
+    }
+
+
+    public List<ProductResponse> getProductCanAddSale()
+    {
+        return productRepository.findProductsNotInDetailSale().stream().map(p ->
+        {
+            ProductImage image = productImageRepository.getFirstByProduct_Id(p.getId());
+            DetailSale detailSale = saleDetailRepository.getFirstByProduct_Id(p.getId());
+            Sale sale = null;
+            if(detailSale != null) {
+                sale = saleRepository.getById(detailSale.getSale().getId());
+            }
+            return convertEntityToResponse(p, image, sale);
+        }).toList();
+
+    }
+
+
+
+    ProductResponse convertEntityToResponse(Product product, ProductImage image , Sale sale) {
+        ProductResponse response = new ProductResponse();
+        response.setId(product.getId());
+        response.setName(product.getName());
+        response.setPrice(product.getPrice());
+        if(image!=null) response.setImageUrl(image.getImage());
+        else response.setImageUrl(null);
+        response.setDescription(product.getDescription());
+        response.setStock(product.getStock());
+        response.setActive(product.getActive());
+        response.setCategoryId(product.getCategory().getId());
+        response.setBrandId(product.getBrand().getId());
+        if (sale != null) {
+            response.setSalePrice(product.getPrice()*(sale.getPercent()/100));
         }
-        productResponse.setSale(product.getIsSale());
-        productResponse.setActive(product.getActive());
-        productResponse.setCategoryId(product.getCategory().getId());
-        productResponse.setBrandId(product.getBrand().getId());
-        return productResponse;
+        else
+            response.setSalePrice(-1.0);
+        return response;
     }
 }
 

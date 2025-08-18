@@ -27,15 +27,7 @@ public class ProductController {
         return apiResponse;
     }
 
-    @GetMapping("/products")
-    public ApiResponse<List<ProductResponse>> getProducts()
-    {
-        ApiResponse<List<ProductResponse>> apiResponse = new ApiResponse<>();
-        apiResponse.setStatusCode(MyApiResponse.OK.getCode());
-        apiResponse.setMessage(MyApiResponse.OK.getMessage());
-        apiResponse.setData(productService.getProducts());
-        return apiResponse;
-    }
+
 
     @GetMapping("/products/{prodId}")
     public ApiResponse getProductsById(@PathVariable int prodId)
@@ -44,29 +36,38 @@ public class ProductController {
         apiResponse.setStatusCode(MyApiResponse.OK.getCode());
         apiResponse.setMessage(MyApiResponse.OK.getMessage());
         apiResponse.setData(productService.getProductById(prodId));
+
+
         return apiResponse;
     }
 
 
-    @GetMapping("/products/category/{catId}")
-    public ApiResponse<List<ProductResponse>> getProductsByCategory(@PathVariable int catId, String kw, @Nullable @RequestParam("ordered") String ordered)
+
+    @GetMapping("/products")
+    public ApiResponse<List<ProductResponse>> getProductList(@Nullable @RequestParam Integer categoryId, @Nullable @RequestParam Integer brandId)
     {
         ApiResponse<List<ProductResponse>> apiResponse = new ApiResponse<>();
         apiResponse.setStatusCode(MyApiResponse.OK.getCode());
         apiResponse.setMessage(MyApiResponse.OK.getMessage());
-        apiResponse.setData(productService.getProductsByCategory(catId, ordered));
+
+        if(categoryId == null && brandId == null)
+        {
+            apiResponse.setData(productService.getProducts());
+        }
+        else if(brandId == null)
+        {
+            apiResponse.setData(productService.getProductsByCategory(categoryId));
+        }
+        else
+        {
+            apiResponse.setData(productService.getProductsByCategoryAndBrand(categoryId, brandId));
+        }
+
         return apiResponse;
     }
 
-    @GetMapping("/products/category/{catId}/brand/{brandId}")
-    public ApiResponse<List<ProductResponse>> getProductsByCategoryAndBrand(@PathVariable(value = "catId") int catId, @PathVariable(value = "brandId") int brandId, @Nullable @RequestParam("ordered") String ordered)
-    {
-        ApiResponse<List<ProductResponse>> apiResponse = new ApiResponse<>();
-        apiResponse.setStatusCode(MyApiResponse.OK.getCode());
-        apiResponse.setMessage(MyApiResponse.OK.getMessage());
-        apiResponse.setData(productService.getProductsByCategoryAndBrand(catId, brandId, ordered));
-        return apiResponse;
-    }
+
+
 
     @PatchMapping("/products/{prodId}")
     public ApiResponse<ProductResponse> updateProduct(@PathVariable int prodId, @RequestBody ProductRequest request)
@@ -77,5 +78,37 @@ public class ProductController {
         apiResponse.setData(productService.updateProduct(prodId, request));
         return apiResponse;
     }
+
+
+    @GetMapping("/products/new")
+    public ApiResponse<List<ProductResponse>> getNewProduct()
+    {
+        ApiResponse<List<ProductResponse>>  apiResponse = new ApiResponse<>();
+        apiResponse.setStatusCode(MyApiResponse.OK.getCode());
+        apiResponse.setMessage(MyApiResponse.OK.getMessage());
+        apiResponse.setData(productService.getNewProduct());
+        return apiResponse;
+    }
+
+    @GetMapping("/products/search")
+    public ApiResponse<List<ProductResponse>> searchProductByName(@RequestParam String kw)
+    {
+        ApiResponse<List<ProductResponse>> apiResponse = new ApiResponse<>();
+        apiResponse.setStatusCode(MyApiResponse.OK.getCode());
+        apiResponse.setMessage(MyApiResponse.OK.getMessage());
+        apiResponse.setData(productService.searchProductByName(kw));
+        return apiResponse;
+    }
+
+    @GetMapping("/products/sale")
+    public ApiResponse<List<ProductResponse>> getProductCanAddSale()
+    {
+        ApiResponse<List<ProductResponse>>  apiResponse = new ApiResponse<>();
+        apiResponse.setStatusCode(MyApiResponse.OK.getCode());
+        apiResponse.setMessage(MyApiResponse.OK.getMessage());
+        apiResponse.setData(productService.getProductCanAddSale());
+        return apiResponse;
+    }
+
 
 }

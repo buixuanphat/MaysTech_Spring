@@ -110,5 +110,17 @@ public class ProductController {
         return apiResponse;
     }
 
+//
+//    @PatchMapping("/products/stock/{id}")
+//    public ApiResponse<ProductResponse> updateStock(@PathVariable int id, @RequestParam int amount)
+//    {
+//        ApiResponse<ProductResponse> apiResponse = new ApiResponse<>();
+//        apiResponse.setStatusCode(MyApiResponse.OK.getCode());
+//        apiResponse.setMessage(MyApiResponse.OK.getMessage());
+//        apiResponse.setData(productService.updateStock(id, amount));
+//        return apiResponse;
+//    }
+
+
 
 }

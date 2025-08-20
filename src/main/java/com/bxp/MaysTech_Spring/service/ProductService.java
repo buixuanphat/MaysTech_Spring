@@ -2,10 +2,7 @@ package com.bxp.MaysTech_Spring.service;
 
 import com.bxp.MaysTech_Spring.dto.product.ProductRequest;
 import com.bxp.MaysTech_Spring.dto.product.ProductResponse;
-import com.bxp.MaysTech_Spring.entity.DetailSale;
-import com.bxp.MaysTech_Spring.entity.Product;
-import com.bxp.MaysTech_Spring.entity.ProductImage;
-import com.bxp.MaysTech_Spring.entity.Sale;
+import com.bxp.MaysTech_Spring.entity.*;
 import com.bxp.MaysTech_Spring.exception.AppException;
 import com.bxp.MaysTech_Spring.exception.MyApiResponse;
 import com.bxp.MaysTech_Spring.repository.*;
@@ -34,6 +31,9 @@ public class ProductService {
 
     @Autowired
     SaleRepository saleRepository;
+
+    @Autowired
+    UserProductRepository userProductRepository;
 
     public ProductResponse createProduct(ProductRequest request) {
         if (productRepository.existsByName(request.getName())) {
@@ -69,6 +69,24 @@ public class ProductService {
         return convertEntityToResponse(product, image, sale);
     }
 
+//    public ProductResponse updateStock(int id)
+//    {
+//        List<UserProduct> selectedUserProducts = userProductRepository.findAllByUser_IdAndIsChosen(id, true);
+//        for (UserProduct userProduct : selectedUserProducts) {
+//            userProductRepository.deleteById(userProduct.getId());
+//
+//            Product product = productRepository.getById(id);
+//            product.setStock(product.getStock() - userProduct.getAmount());
+//            productRepository.save(product);
+//            ProductImage image = productImageRepository.getFirstByProduct_Id(product.getId());
+//            DetailSale detailSale = saleDetailRepository.getFirstByProduct_Id(product.getId());
+//            Sale sale = null;
+//            if(detailSale != null) {
+//                sale = saleRepository.getById(detailSale.getSale().getId());
+//            }
+//            return convertEntityToResponse(product, image, sale);
+//        }
+//    }
 
 
 
@@ -202,7 +220,7 @@ public class ProductService {
         response.setCategoryId(product.getCategory().getId());
         response.setBrandId(product.getBrand().getId());
         if (sale != null) {
-            response.setSalePrice(product.getPrice()*(sale.getPercent()/100));
+            response.setSalePrice(product.getPrice()*(1-(sale.getPercent())/100));
         }
         else
             response.setSalePrice(-1.0);

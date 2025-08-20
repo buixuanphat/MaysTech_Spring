@@ -10,7 +10,15 @@ public class UserProductResponse {
     private double totalPrice;
     private Integer amount;
     private boolean isChosen;
+    private int stock;
 
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
 
     public UserProductResponse(int id, int userId, int productId, String productName, String productImage, double productPrice, double totalPrice, Integer amount, boolean isChosen) {
         this.id = id;

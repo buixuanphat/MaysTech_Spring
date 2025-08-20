@@ -4,13 +4,10 @@ import com.bxp.MaysTech_Spring.dto.product.ProductResponse;
 import com.bxp.MaysTech_Spring.dto.user_product.UserProductCreateRequest;
 import com.bxp.MaysTech_Spring.dto.user_product.UserProductResponse;
 import com.bxp.MaysTech_Spring.dto.user_product.UserProductTotalResponse;
-import com.bxp.MaysTech_Spring.entity.Product;
-import com.bxp.MaysTech_Spring.entity.User;
-import com.bxp.MaysTech_Spring.entity.UserProduct;
+import com.bxp.MaysTech_Spring.entity.*;
 import com.bxp.MaysTech_Spring.exception.AppException;
 import com.bxp.MaysTech_Spring.exception.MyApiResponse;
-import com.bxp.MaysTech_Spring.repository.ProductRepository;
-import com.bxp.MaysTech_Spring.repository.UserProductRepository;
+import com.bxp.MaysTech_Spring.repository.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.ColumnDefault;
@@ -34,6 +31,8 @@ public class UserProductService {
 
     @Autowired
     private ProductRepository productRepository;
+
+
 
     public List<UserProductResponse> getProductInCart(int userId)
     {
@@ -85,6 +84,11 @@ public class UserProductService {
     {
         List<UserProduct> selectedUserProducts = userProductRepository.findAllByUser_IdAndIsChosen(id, true);
         for (UserProduct userProduct : selectedUserProducts) {
+
+            Product product = productRepository.getById(userProduct.getProduct().getId());
+            product.setStock(product.getStock() - userProduct.getAmount());
+            productRepository.save(product);
+
             userProductRepository.deleteById(userProduct.getId());
         }
     }
@@ -151,6 +155,7 @@ public class UserProductService {
         ProductResponse product = productService.getProductById(userProduct.getProduct().getId());
         response.setProductImage(product.getImageUrl());
         response.setProductName(product.getName());
+        response.setStock(product.getStock());
         if(product.getSalePrice()!=-1)
         {
             response.setProductPrice(product.getSalePrice());
